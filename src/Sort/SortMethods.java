@@ -7,12 +7,15 @@ public class SortMethods {
 	public static void main(String[] args) {
 
 		Random random = new Random();
-		int[] array = new int[100000];
-		for (int i = 0; i < 100000; i ++) {
-			array[i] = random.nextInt(100000);
+		int length = 100000;
+		int[] array = new int[length];
+		for (int i = 0; i < length; i ++) {
+			array[i] = random.nextInt(length);
 		}
 		
 		int[] testArray = {3,1,4,1,5,9,2,6};
+		
+		int[] approximalSortedArray = quickSort(array);
 		
 		long quickSortStart=System.currentTimeMillis();
 		int[] quickSortedArray = quickSort(array);
@@ -26,7 +29,12 @@ public class SortMethods {
 		long bubbleSortEndInterval=bubbleSortEnd-bubbleSortStart;
 		System.out.println("Bubble sort Costs : " + bubbleSortEndInterval + "ms");
 		
-		System.out.println("hello,world");
+		long insertSortStart=System.currentTimeMillis();
+		int[] insertSortedArray = insertSort(array);
+		long insertSortEnd=System.currentTimeMillis();
+		long insertSortEndInterval=insertSortEnd-insertSortStart;
+		System.out.println("Insert sort Costs : " + insertSortEndInterval + "ms");
+		
 	}
 	
 	public static int[] quickSort(int[] array){
@@ -70,6 +78,29 @@ public class SortMethods {
 		return sortedArray;
 	}
 	
+	public static int[] insertSort(int[] array) {
+		if(array == null || array.length == 0) {
+			return null;
+		}
+		
+		int[] sortedArray = new int[array.length];
+		for(int i = 0; i < array.length; i++){
+			sortedArray[i] = array[i];
+		}
+		
+		for(int i = 1; i < sortedArray.length; i++) {
+			int j = i;
+			while(j > 0 && sortedArray[j] < sortedArray[j-1]) {
+				int temp = sortedArray[j-1];
+				sortedArray[j-1] = sortedArray[j];
+				sortedArray[j] = temp;
+				j--;
+			}
+		}
+
+		return sortedArray;
+	}
+	
 	/*
 	 * The helper class is private
 	 */
@@ -77,7 +108,9 @@ public class SortMethods {
 		private static void qSort(int[] array, int left, int right){
 			int i = left;
 			int j = right;
-			int benchIndex = left;
+			int benchIndex = (int) (left + Math.random() * (right - left));
+			//int benchIndex = left;
+			
 			while (i < j) {
 				for(; j > i; j--) {
 					if(array[i] > array[j]) {
