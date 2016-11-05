@@ -7,14 +7,15 @@ public class SortMethods {
 	public static void main(String[] args) {
 
 		Random random = new Random();
-		int length = 100000;
+		int length = 300000;
 		int[] array = new int[length];
 		for (int i = 0; i < length; i ++) {
 			array[i] = random.nextInt(length);
 		}
 		
 		int[] testArray = {3,1,4,1,5,9,2,6};
-		
+		int[] goldenSepArray = {0,6,1,8,0,3,3,9,8,8,7,4,9,8,9,4,8,4,8,2,0};
+
 		int[] approximalSortedArray = quickSort(array);
 		
 		long quickSortStart=System.currentTimeMillis();
@@ -35,6 +36,12 @@ public class SortMethods {
 		long insertSortEndInterval=insertSortEnd-insertSortStart;
 		System.out.println("Insert sort Costs : " + insertSortEndInterval + "ms");
 		
+		long mergeSortStart=System.currentTimeMillis();
+		int[] mergeSortedArray = mergeSort(array);
+		long mergeSortEnd=System.currentTimeMillis();
+		long mergeSortEndInterval=mergeSortEnd-mergeSortStart;
+		System.out.println("Merge sort Costs : " + mergeSortEndInterval + "ms");
+
 	}
 	
 	public static int[] quickSort(int[] array){
@@ -44,6 +51,7 @@ public class SortMethods {
 		}
 		
 		int[] sortedArray = new int[array.length];
+		
 		for(int i = 0; i < array.length; i++){
 			sortedArray[i] = array[i];
 		}
@@ -84,6 +92,7 @@ public class SortMethods {
 		}
 		
 		int[] sortedArray = new int[array.length];
+		
 		for(int i = 0; i < array.length; i++){
 			sortedArray[i] = array[i];
 		}
@@ -98,6 +107,37 @@ public class SortMethods {
 			}
 		}
 
+		return sortedArray;
+	}
+	
+	public static int[] mergeSort(int[] array) {
+		if(array == null || array.length == 0) {
+			return null;
+		}
+		
+		int[] sortedArray = new int[array.length];
+		
+		for(int i = 0; i < array.length; i++){
+			sortedArray[i] = array[i];
+		}
+		
+		int arrayLength = array.length;
+		int subArrayLength = 1;
+		while(subArrayLength < arrayLength) {
+			int firstStartIndex = 0;
+			int secondStartIndex = firstStartIndex + subArrayLength;
+			while(secondStartIndex < arrayLength) {
+
+				SortMethodsHelper.merge(sortedArray, firstStartIndex, secondStartIndex);
+				
+				firstStartIndex += 2 * subArrayLength;
+				secondStartIndex += 2 * subArrayLength;
+			}
+			
+			subArrayLength = 2 * subArrayLength;
+			
+		}
+		
 		return sortedArray;
 	}
 	
@@ -139,6 +179,52 @@ public class SortMethods {
 			if(right > benchIndex + 1 ) {
 				qSort(array, benchIndex + 1, right);
 			}
+
+		}
+		
+		private static void merge(int[] array, int firstStartIndex, int secondStartIndex) {
+			int subArrayLength = secondStartIndex - firstStartIndex;
+			int[] tempSorted = new int[2 * subArrayLength];
+			
+			int i = firstStartIndex;
+			int j = secondStartIndex;
+			int k = 0;
+			int arrayLength = array.length;
+			while (i < secondStartIndex && j < arrayLength && j < (secondStartIndex + subArrayLength)) {
+				if(array[i] < array[j]) {
+					tempSorted[k] = array[i];
+					i++;
+					k++;
+				} else {
+					tempSorted[k] = array[j];
+					j++;
+					k++;
+				}
+			}
+			
+			if (i == secondStartIndex) {
+				while(j < arrayLength && j < (secondStartIndex + subArrayLength)) {
+					tempSorted[k] = array[j];
+					j++;
+					k++;
+				}
+			} else if (j == arrayLength || j == (secondStartIndex + subArrayLength)) {
+				while(i < secondStartIndex) {
+					tempSorted[k] = array[i];
+					i++;
+					k++;
+				}
+			}
+
+			k--;
+			j--;
+			while(j >= firstStartIndex) {		
+				array[j] = tempSorted[k];
+				
+				k--;
+				j--;
+			}
+
 
 		}
 	}
