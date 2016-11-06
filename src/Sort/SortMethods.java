@@ -1,5 +1,6 @@
 package Sort;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class SortMethods {
@@ -7,40 +8,50 @@ public class SortMethods {
 	public static void main(String[] args) {
 
 		Random random = new Random();
-		int length = 300000;
-		int[] array = new int[length];
+		int length = 100000;
+		int[] array1 = new int[length];
 		for (int i = 0; i < length; i ++) {
-			array[i] = random.nextInt(length);
+			array1[i] = random.nextInt(length);
+		}
+		int[] array2 = new int[length];
+		for (int i = 0; i < length; i ++) {
+			array2[i] = array1[i];
 		}
 		
 		int[] testArray = {3,1,4,1,5,9,2,6};
 		int[] goldenSepArray = {0,6,1,8,0,3,3,9,8,8,7,4,9,8,9,4,8,4,8,2,0};
 
-		int[] approximalSortedArray = quickSort(array);
+		int[] approximalSortedArray = quickSort(array1);
 		
 		long quickSortStart=System.currentTimeMillis();
-		int[] quickSortedArray = quickSort(array);
+		int[] quickSortedArray = quickSort(array1);
 		long quickSortEnd=System.currentTimeMillis();
 		long quickSortEndInterval=quickSortEnd-quickSortStart;
 		System.out.println("Quick sort Costs : " + quickSortEndInterval + "ms");
 		
 		long bubbleSortStart=System.currentTimeMillis();
-		int[] bubbleSortedArray = bubbleSort(array);
+		int[] bubbleSortedArray = bubbleSort(array1);
 		long bubbleSortEnd=System.currentTimeMillis();
 		long bubbleSortEndInterval=bubbleSortEnd-bubbleSortStart;
 		System.out.println("Bubble sort Costs : " + bubbleSortEndInterval + "ms");
 		
 		long insertSortStart=System.currentTimeMillis();
-		int[] insertSortedArray = insertSort(array);
+		int[] insertSortedArray = insertSort(array1);
 		long insertSortEnd=System.currentTimeMillis();
 		long insertSortEndInterval=insertSortEnd-insertSortStart;
 		System.out.println("Insert sort Costs : " + insertSortEndInterval + "ms");
 		
 		long mergeSortStart=System.currentTimeMillis();
-		int[] mergeSortedArray = mergeSort(array);
+		int[] mergeSortedArray = mergeSort(array1);
 		long mergeSortEnd=System.currentTimeMillis();
 		long mergeSortEndInterval=mergeSortEnd-mergeSortStart;
 		System.out.println("Merge sort Costs : " + mergeSortEndInterval + "ms");
+		
+		long systemSortStart=System.currentTimeMillis();
+		Arrays.sort(array1);
+		long systemSortEnd=System.currentTimeMillis();
+		long systemSortInterval=systemSortEnd-systemSortStart;
+		System.out.println("System sort Costs : " + systemSortInterval + "ms");
 
 	}
 	
@@ -224,8 +235,6 @@ public class SortMethods {
 				k--;
 				j--;
 			}
-
-
 		}
 	}
 }
