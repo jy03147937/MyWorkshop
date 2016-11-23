@@ -1,6 +1,11 @@
 package Math;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 public class IntervelMerge {
 
@@ -10,6 +15,7 @@ public class IntervelMerge {
 		int[][] mergedArray = IntervelMerge(testArray);
 		
 		System.out.println(Arrays.deepToString(mergedArray));
+
 	}
 	
 	public static int[][] IntervelMerge(int[][] intervels) {
@@ -19,10 +25,11 @@ public class IntervelMerge {
 		
 		int colNum = intervels.length;
 		int rowNum = intervels[0].length;
-		int[][] mergedIntervels = new int[colNum][rowNum];
+
+		ArrayList mergedStartlist = new ArrayList();
+		ArrayList mergedEndlist = new ArrayList();
 		
 		int i = 0;
-		int k = 0;
 		while(i <= (rowNum - 1)) {
 			int start = intervels[0][i];
 			int end = intervels[1][i];
@@ -39,11 +46,16 @@ public class IntervelMerge {
 				}
 			}
 			
-			mergedIntervels[0][k] = start;
-			mergedIntervels[1][k] = end;
-			k++;
+			mergedStartlist.add(start);
+			mergedEndlist.add(end);
 			i++;
 			
+		}
+		
+		int[][] mergedIntervels = new int[colNum][mergedStartlist.size()];
+		for(int k = 0; k < mergedStartlist.size(); k++) {
+			mergedIntervels[0][k] = (int)mergedStartlist.get(k);
+			mergedIntervels[1][k] = (int)mergedEndlist.get(k);
 		}
 		
 		return mergedIntervels;
