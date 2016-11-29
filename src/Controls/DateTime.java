@@ -13,8 +13,13 @@ public class DateTime {
 		DateTime dt = new DateTime();
 		
 		try {
-			dt = new DateTime("2016-11-23 02:23:44");
+			dt = new DateTime("2016-11-23 02:23:1");
 			
+			System.out.println(dt.toString());
+			
+			DateTime newDt = dt.addDays(7.5f);
+			
+			System.out.println(newDt.toString());
 			System.out.println(dt.toString());
 		} catch (DatetimeFormatException e) {
 			
@@ -104,5 +109,32 @@ public class DateTime {
 		str.append(String.valueOf(this.second).length() == 1 ? "0" + String.valueOf(this.second) : String.valueOf(this.second));
 		
 		return str.toString();
+	}
+	
+	public DateTime addDays(float days) throws DatetimeFormatException {
+		
+		int daysInt = (int)Math.floor(days);	
+		this.day += daysInt;
+		
+		float daysDecimal = days - daysInt;
+		int hoursInt = (int)Math.floor(daysDecimal * 24);
+		this.hour += hoursInt;
+		
+		float hoursDecimal = daysDecimal * 24 - hoursInt;
+		int minutesInt = (int)Math.floor(hoursDecimal * 60);
+		this.minute += minutesInt;
+		
+		float minutesDecimal = hoursDecimal * 60 - minutesInt;
+		int secondsInt = (int)Math.floor(minutesDecimal * 60);
+		this.second += secondsInt;
+		
+		DateTime result = new DateTime(this.toString());
+		
+		this.day -= daysInt;
+		this.hour -= hoursInt;
+		this.minute -= minutesInt;
+		this.second -= secondsInt;
+		
+		return result;
 	}
 }
