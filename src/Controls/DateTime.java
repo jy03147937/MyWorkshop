@@ -13,6 +13,8 @@ public class DateTime {
 		DateTime dt = new DateTime();
 		
 		try {
+			
+			
 			dt = new DateTime("2017-01-15");
 			System.out.println(dt.getDayOfYear());
 			DateTime newDt = dt.addDays(26.54f);
@@ -43,7 +45,7 @@ public class DateTime {
 	private int second = 0;
 	
 	
-	DateTime () {
+	public DateTime () {
 		Date dt = new Date();
 		GregorianCalendar c = new GregorianCalendar();
 		c.setTime(dt);
@@ -56,7 +58,7 @@ public class DateTime {
 		this.second = c.get(Calendar.SECOND);
 	}
 	
-	DateTime (String datetime) throws DatetimeFormatException {
+	public DateTime (String datetime) throws DatetimeFormatException {
 		String reg = "\\b\\d{1,4}-\\d{1,2}-\\d{1,2}\\s\\d{1,2}:\\d{1,2}:\\d{1,2}\\b|\\b\\d{1,4}-\\d{1,2}-\\d{1,2}\\b";
 		Boolean isMatch = datetime.matches(reg);
 		if(!isMatch) {
@@ -180,31 +182,89 @@ public class DateTime {
 		return true;
 	}
 	
-	public DateTime addDays(float days) throws DatetimeFormatException {
+	public DateTime addYears(int years) throws DatetimeFormatException {
+		int year = this.year + years;
 		
-		float oriSeconds = getYoungSeconds(this);
+		DateTime addedDateTime = new DateTime(year + "-" + this.month + "-" + this.day + " " + this.hour + ":" + this.minute + ":" + this.second);
+		
+		return addedDateTime;
+	}
 	
-		DateTime oriDateTime = convertYoungSecondsToDateTime(oriSeconds);
+	public DateTime addMonths(int months) throws DatetimeFormatException {
 		
-		float addedSeconds = oriSeconds + days * 3600 * 24;
+		int year = this.year;
+		
+		int month = this.month;
+		
+		month += months;
+		
+		int addedYears = (int) month / 12;
+		
+		year += addedYears;
+		
+		month += month % 12;
+
+		DateTime addedDateTime = new DateTime(year + "-" + month + "-" + this.day + " " + this.hour + ":" + this.minute + ":" + this.second);
+		
+		return addedDateTime;
+	}
+	
+	public DateTime addWeeks(double weeks) throws DatetimeFormatException {
+		
+		double oriSeconds = getYoungSeconds(this);
+		
+		double addedSeconds = oriSeconds + weeks * 7 * 3600 * 24;
 		
 		DateTime addedDateTime = convertYoungSecondsToDateTime(addedSeconds);
 		
 		return addedDateTime;
 	}
 	
-	public DateTime addHours(float hours) throws DatetimeFormatException {
+	public DateTime addDays(double days) throws DatetimeFormatException {
 		
-		float oriSeconds = getYoungSeconds(this);
+		double oriSeconds = getYoungSeconds(this);
 		
-		float addedSeconds = oriSeconds + hours * 3600;
+		double addedSeconds = oriSeconds + days * 3600 * 24;
 		
 		DateTime addedDateTime = convertYoungSecondsToDateTime(addedSeconds);
 		
 		return addedDateTime;
 	}
 	
-	private float getYoungSeconds(DateTime dateTime) throws DatetimeFormatException{
+	public DateTime addHours(double hours) throws DatetimeFormatException {
+		
+		double oriSeconds = getYoungSeconds(this);
+		
+		double addedSeconds = oriSeconds + hours * 3600;
+		
+		DateTime addedDateTime = convertYoungSecondsToDateTime(addedSeconds);
+		
+		return addedDateTime;
+	}
+	
+	public DateTime addMinutes(double minutes) throws DatetimeFormatException {
+		
+		double oriSeconds = getYoungSeconds(this);
+		
+		double addedSeconds = oriSeconds + minutes * 60;
+		
+		DateTime addedDateTime = convertYoungSecondsToDateTime(addedSeconds);
+		
+		return addedDateTime;
+	}
+	
+	public DateTime addSeconds(double seconds) throws DatetimeFormatException {
+		
+		double oriSeconds = getYoungSeconds(this);
+		
+		double addedSeconds = oriSeconds + seconds;
+		
+		DateTime addedDateTime = convertYoungSecondsToDateTime(addedSeconds);
+		
+		return addedDateTime;
+	}
+	
+	private double getYoungSeconds(DateTime dateTime) throws DatetimeFormatException{
 		
 		DateTime youngDateTime = new DateTime("1988-01-01 00:00:00");
 		
@@ -229,11 +289,11 @@ public class DateTime {
 		return totalSeconds;
 	}
 	
-	private static DateTime convertYoungSecondsToDateTime(float seconds) throws DatetimeFormatException {
+	private static DateTime convertYoungSecondsToDateTime(double seconds) throws DatetimeFormatException {
 		
 		DateTime youngDateTime = new DateTime("1988-01-01 00:00:00");
 		
-		float leftSeconds = seconds;
+		double leftSeconds = seconds;
 		
 		int year = youngDateTime.Year();
 		
