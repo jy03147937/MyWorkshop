@@ -1,7 +1,9 @@
 package DBConnector;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Repository<T> implements IRepository {
@@ -18,9 +20,17 @@ public class Repository<T> implements IRepository {
 		
 		ResultSet rs = db.ExcuteSQLStatement(sql);
 		
-		List<T> result = DBHelper.ResultSetReader(rs, t);
+		List<T> result = new ArrayList<T>();
 		
-		db.closeConnection(rs);
+		try {
+			result = DBHelper.ResultSetReader(rs, t);
+			
+		} catch (NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
+
+			e.printStackTrace();
+		} finally {
+			db.closeConnection(rs);
+		}
 		
 		return result;
 	}

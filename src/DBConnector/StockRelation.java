@@ -1,17 +1,24 @@
 package DBConnector;
 
-import Controls.DateTime;
+import java.util.Date;
 
 public class StockRelation {
 
-	private DateTime Date;
+	private int RecordID;
+	private String Date;
 	private float TwentyMinsBeforeCloseMorning;
 	private float DiffAfternoon;
 
-	public DateTime getDate() {
+	public int getRecordID() {
+		return RecordID;
+	}
+	public void setRecordID(int recordID) {
+		this.RecordID = recordID;
+	}
+	public String getDate() {
 		return Date;
 	}
-	public void setDate(DateTime date) {
+	public void setDate(String date) {
 		this.Date = date;
 	}
 	public float getTwentyMinsBeforeCloseMorning() {

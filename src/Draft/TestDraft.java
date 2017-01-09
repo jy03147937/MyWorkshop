@@ -1,6 +1,7 @@
 package Draft;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import Controls.DateTime;
 import Controls.DatetimeFormatException;
@@ -19,4 +20,7 @@ public class TestDraft {
 		array[0] = 1;
 	}
 
+	private static void testType(int num) throws DatetimeFormatException {
+		System.out.println(num);
+	}
 }

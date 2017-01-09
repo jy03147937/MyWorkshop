@@ -12,7 +12,13 @@ public class Caller {
 		Repository<StockRelation> re = new Repository(new StockRelation());
 		
 		List<StockRelation> list = re.getListBySql("SELECT * FROM StockRelation");
+
+		System.out.println(list.size());
 		
+		for(StockRelation record : list) {
+			System.out.println(record.getRecordID());
+		}
+
 	}
 
 }
