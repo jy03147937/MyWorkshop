@@ -5,7 +5,7 @@ import java.util.Date;
 public class StockRelation {
 
 	private int RecordID;
-	private String Date;
+	private Date Date;
 	private float TwentyMinsBeforeCloseMorning;
 	private float DiffAfternoon;
 
@@ -15,10 +15,10 @@ public class StockRelation {
 	public void setRecordID(int recordID) {
 		this.RecordID = recordID;
 	}
-	public String getDate() {
+	public Date getDate() {
 		return Date;
 	}
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.Date = date;
 	}
 	public float getTwentyMinsBeforeCloseMorning() {
