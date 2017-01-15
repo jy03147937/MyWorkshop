@@ -1,7 +1,11 @@
 package Draft;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import Controls.DateTime;
 import Controls.DatetimeFormatException;
@@ -10,10 +14,8 @@ public class TestDraft {
 
 	public static void main(String[] args) throws DatetimeFormatException {
 
-		int[] array = {0,0};
-		changeArray(array);
-		System.out.println(Arrays.toString(array));
 	}
+
 
 	
 	private static void changeArray(int[] array) throws DatetimeFormatException {
